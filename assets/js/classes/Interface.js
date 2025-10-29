@@ -33,7 +33,6 @@ export default class Interface {
       const p = document.createElement("p");
       p.textContent = task.name;
       li.appendChild(p);
-
       // On ajoute la tâche à la liste dans le HTML
       Interface.listHTML.appendChild(li);
     });

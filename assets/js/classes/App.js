@@ -15,7 +15,7 @@ export default class App {
         this.tasks.push(new Task(data));
 
         // Si c'est un rendez-vous
-      } else if (data.type == "simple") {
+      } else if (data.type == "appoitment") {
         this.tasks.push(new Appoitment(data));
       }
       // On affiche les tâches à jour

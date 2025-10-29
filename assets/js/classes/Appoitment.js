@@ -1,3 +1,4 @@
+import Task from "./Task.js";
 // La classe Appointment hérite de Task
 export default class Appoitment extends Task {
   // Propriété pour la date du rendez-vous
