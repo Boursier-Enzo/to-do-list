@@ -1,24 +1,39 @@
-// On importe les classes dont on a besoin
 import Appoitment from "./Appoitment.js";
 import Interface from "./Interface.js";
 import Task from "./Task.js";
 
 export default class App {
-  // Tableau pour stocker les tâches
-  tasks = [];
+  tasks = []; // Tableau qui contient toutes les tâches
 
   constructor() {
-    // Quand l'utilisateur crée une tâche
+    // Gère la création d'une tâche à partir du formulaire
     Interface.handlerCreateTask((data) => {
-      // Si c'est une tâche simple
-      if (data.type == "simple") {
-        this.tasks.push(new Task(data));
+      let task;
 
-        // Si c'est un rendez-vous
+      // Crée une tâche selon son type
+      if (data.type == "simple") {
+        task = new Task(data);
       } else if (data.type == "appoitment") {
-        this.tasks.push(new Appoitment(data));
+        task = new Appoitment(data);
       }
-      // On affiche les tâches à jour
+
+      // Bouton pour supprimer une tâche
+      task.btnDelete.addEventListener("click", () => {
+        this.tasks = this.tasks.filter((t) => t.id !== task.id);
+        Interface.displayTasks(this.tasks);
+      });
+
+      // Bouton pour modifier le nom d’une tâche
+      task.btnEdit.addEventListener("click", () => {
+        const newName = prompt("Modifier le nom de la tâche :", task.name);
+        if (newName) {
+          task.name = newName;
+          Interface.displayTasks(this.tasks);
+        }
+      });
+
+      // Ajoute la nouvelle tâche et met à jour l'affichage
+      this.tasks.push(task);
       Interface.displayTasks(this.tasks);
     });
   }

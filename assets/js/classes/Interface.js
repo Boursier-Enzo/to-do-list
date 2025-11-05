@@ -1,7 +1,8 @@
 export default class Interface {
+  // Élément HTML contenant la liste des tâches
   static listHTML = document.getElementById("taskList");
 
-  // Gère la création d'une nouvelle tâche
+  // Gère la création d’une nouvelle tâche via le bouton "Valider"
   static handlerCreateTask(handler) {
     const newTaskName = document.getElementById("newTaskName");
     const newTaskType = document.getElementById("newTaskType");
@@ -9,7 +10,7 @@ export default class Interface {
     const newTaskValidate = document.getElementById("newTaskValidate");
 
     newTaskValidate.addEventListener("click", () => {
-      // On récupère les infos entrées par l'utilisateur
+      // Récupère les données saisies et les envoie au handler
       const data = {
         name: newTaskName.value,
         type: newTaskType.value,
@@ -17,23 +18,24 @@ export default class Interface {
           date: newTaskDate.value,
         },
       };
-      // On envoie ces infos à la fonction qu'on a passée en paramètre
       handler(data);
     });
   }
 
-  // Affiche les tâches sur la page
+  // Affiche toutes les tâches dans la liste
   static displayTasks(tasks) {
-    Interface.listHTML.innerHTML = "";
+    Interface.listHTML.innerHTML = ""; // Vide la liste avant d'afficher
     tasks.forEach((task) => {
       const li = document.createElement("li");
-
-      li.appendChild(task.checkbox);
-
       const p = document.createElement("p");
-      p.textContent = task.name;
+
+      // Affiche le nom et la date si disponible
+      p.textContent = task.date ? `${task.name} - ${task.date}` : task.name;
+
       li.appendChild(p);
-      // On ajoute la tâche à la liste dans le HTML
+      li.appendChild(task.checkbox);
+      li.appendChild(task.btnEdit);
+      li.appendChild(task.btnDelete);
       Interface.listHTML.appendChild(li);
     });
   }

@@ -1,24 +1,32 @@
 export default class Task {
-  static idCount = 1;
+  static idCount = 1; // Compteur pour donner un ID unique à chaque tâche
 
-  // Propriétés de chaque tâche
   id;
   name;
   checked = false;
   checkbox;
+  btnDelete;
+  btnEdit;
 
   constructor(data) {
-    // Donne un id à la tâche
-    this.id = Task.idCount;
-    Task.idCount++;
+    // Attribue un identifiant unique à la tâche
+    this.id = Task.idCount++;
     this.name = data.name;
 
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    this.checkbox = checkbox;
-    // Quand on clique sur la case, on change l'état de la tâche
-    checkbox.addEventListener("click", () => this.toggle());
+    // Crée la case à cocher
+    this.checkbox = document.createElement("input");
+    this.checkbox.type = "checkbox";
+    this.checkbox.addEventListener("click", () => this.toggle());
+
+    // Bouton pour supprimer la tâche
+    this.btnDelete = document.createElement("button");
+    this.btnDelete.textContent = "Supprimer";
+
+    // Bouton pour modifier la tâche
+    this.btnEdit = document.createElement("button");
+    this.btnEdit.textContent = "Modifier";
   }
-  // Change l'état coché / décoché
+
+  // Change l’état coché / décoché de la tâche
   toggle = () => (this.checked = !this.checked);
 }
